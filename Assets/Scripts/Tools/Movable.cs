@@ -42,6 +42,6 @@ public class Movable : MonoBehaviour
 
     private float Easing(float t)
     {
-        return t * t;
+        return t;
     }
 }

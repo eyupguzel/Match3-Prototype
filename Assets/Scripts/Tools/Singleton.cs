@@ -28,7 +28,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
     }
     protected void OnDestroy()
     {
-        if (instance == null)
+        if (instance != null)
             instance = null;
     }
 

@@ -4,15 +4,15 @@ using UnityEngine;
 public class GridSystem<T> : Singleton<GridSystem<T>>
 {
     private T[,] data;
-    private Vector2Int diemnsions = new Vector2Int(1,1);
-    public Vector2Int Diemnsions
+    private Vector2Int dimensions = new Vector2Int(1,1); 
+    public Vector2Int Dimensions
     {
         get
         {
-            return diemnsions;
+            return dimensions;
         }
     }
-    private bool isReady;
+    private bool isReady = true;
     public bool IsReady
     {
         get
@@ -20,27 +20,28 @@ public class GridSystem<T> : Singleton<GridSystem<T>>
             return isReady;
         }
     }
-    public void InitializeGrid(Vector2Int diemnsions)
+    public void InitializeGrid(Vector2Int dimensions)
     {
-        if (diemnsions.x < 0 || diemnsions.y < 0)
+        if (dimensions.x < 0 || dimensions.y < 0)
             Debug.LogWarning("Grid diemnsions must be positive numbers.");
 
-        this.diemnsions = diemnsions;
-        data = new T[diemnsions.x, diemnsions.y];
+        this.dimensions = dimensions;
+        data = new T[dimensions.x, dimensions.y];
     }
     public void Clear()
     {
-        data = new T[diemnsions.x,diemnsions.y];
+        data = new T[dimensions.x,dimensions.y];
     }
 
     public bool CheckBounds(int x, int y)
     {
-        return x >= 0 && x < diemnsions.x && y >= 0 && y < diemnsions.y;
+        return x >= 0 && x < dimensions.x && y >= 0 && y < dimensions.y;
     }
     public bool CheckBounds(Vector2Int positions)
     {
         if (!isReady)
             Debug.LogError("Grid has not been initialized");
+
         return CheckBounds(positions.x, positions.y);
     }
     public bool IsEmpty(int x,int y)
@@ -120,17 +121,17 @@ public class GridSystem<T> : Singleton<GridSystem<T>>
     {
         string s = "";
 
-        for (int y = diemnsions.y - 1; y != -1; --y)
+        for (int y = dimensions.y - 1; y != -1; --y)
         {
             s += "[";
-            for (int x = diemnsions.x - 1; x != diemnsions.x; ++x)
+            for (int x = dimensions.x - 1; x != dimensions.x; ++x)
             {
                 if (IsEmpty(x, y))
                     s += " ";
                 else
                     s += data[x, y].ToString();
 
-                if(x != diemnsions.x - 1)
+                if(x != dimensions.x - 1)
                     s += ", ";
             }
         }
